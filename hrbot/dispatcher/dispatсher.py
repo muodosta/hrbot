@@ -153,7 +153,7 @@ class Dispatcher(DispatcherEvents):
         return handler_data
 
     def __getattribute__(self, method_name):
-        bot_module = importlib.import_module('aiohr.bot.bot')
+        bot_module = importlib.import_module('hrbot.bot.bot')
         if hasattr(bot_module.Bot, method_name):
             return self.__create_decorator(method_name)
         return super().__getattribute__(method_name)

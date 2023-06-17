@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "hrbot"
+version = "0.1.0"
+description = "The hrbot is a wrapper on top of the HighRise Python Bot SDK that makes it easy to create bots in HighRise."
+authors = ["MuoDosta <MuoDostaWork@gmail.com>"]
+license = "MIT License"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+highrise-bot-sdk = "23.1.0b12"
+redis = "4.5.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
