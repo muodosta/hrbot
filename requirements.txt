@@ -1,0 +1,2 @@
+highrise-bot-sdk==23.1.0b12
+redis==4.5.5
