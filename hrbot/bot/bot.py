@@ -20,6 +20,8 @@ class Bot(BaseBot):
         This may be called multiple times, since the connection may be dropped
         and reestablished.
         """
+        self.id = session_metadata.user_id
+
         print(
             f'{_bcolors.WARNING}Bot started in room: '
             f'{_bcolors.FAIL}{session_metadata.room_info.room_name}{_bcolors.ENDC}'
