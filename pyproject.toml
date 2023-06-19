@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "hrbot"
-version = "0.1.0"
+version = "0.1.1"
 description = "The hrbot is a wrapper on top of the HighRise Python Bot SDK that makes it easy to create bots in HighRise."
 authors = ["MuoDosta <MuoDostaWork@gmail.com>"]
 license = "MIT License"
