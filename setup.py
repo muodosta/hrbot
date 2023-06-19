@@ -7,7 +7,7 @@ with open("README.md", encoding="utf-8") as f:
 
 setup(
     name="hrbot",
-    version="0.1.0",
+    version="0.1.1",
     author="MuoDosta",
     author_email="MuoDostaWork@gmail.com",
     description="The hrbot is a wrapper on top of the "
