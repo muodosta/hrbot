@@ -102,7 +102,7 @@ async def on_chat(
     if not await Check.compare_two_value(handler_filter.data.message,
                                          message, handler_filter.data.case_ignore): return False
     if not await Check.command(handler_filter.data.command,
-                               handler_filter.data.prefix if handler_filter.data.prefix else handler.PrefixDefaultValue,
+                               handler_filter.data.prefix if handler_filter.data.prefix else '/.!$#',
                                message, handler_filter.data.case_ignore): return False
     if not await Check.regex(handler_filter.data.regex, message): return False
     for filter_func in handler_filter.custom_filters:
@@ -122,7 +122,7 @@ async def on_whisper(
     if not await Check.compare_two_value(handler_filter.data.message,
                                          message, handler_filter.data.case_ignore): return False
     if not await Check.command(handler_filter.data.command,
-                               handler_filter.data.prefix if handler_filter.data.prefix else handler.PrefixDefaultValue,
+                               handler_filter.data.prefix if handler_filter.data.prefix else '/.!$#',
                                message, handler_filter.data.case_ignore): return False
     if not await Check.regex(handler_filter.data.regex, message): return False
     for filter_func in handler_filter.custom_filters:

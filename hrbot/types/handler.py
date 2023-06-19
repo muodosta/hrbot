@@ -3,7 +3,6 @@ from . import hr
 
 Message = Optional[str | Iterable[str]]
 User = Optional[hr.User | Iterable[hr.User]]
-PrefixDefaultValue = '/.!$#'
 CaseIgnoreDefaultValue = False
 Reaction = Optional[hr.Reaction | Iterable[hr.Reaction]]
 Tip = Optional[Iterable[hr.CurrencyItem | hr.Item]]
