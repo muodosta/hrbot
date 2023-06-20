@@ -1,7 +1,7 @@
 from .base import BaseBot
 from ..types import _bcolors
 from ..types.hr import SessionMetadata, User, Position, AnchorPosition, Reaction, CurrencyItem, Item
-
+from typing import Literal
 
 class Bot(BaseBot):
     @staticmethod
@@ -83,4 +83,17 @@ class Bot(BaseBot):
     ) -> None:
         """On a user moving in the room."""
         pass
-    
+
+    @__event_handler
+    async def on_voice_change(
+        self, users: list[tuple[User, Literal["voice", "muted"]]], seconds_left: int
+    ) -> None:
+        """On a change in voice status in the room."""
+        pass
+
+    @__event_handler
+    async def on_message(
+        self, user_id: str, conversation_id: str, is_new_conversation: bool
+    ) -> None:
+        """On a inbox message received from a user."""
+        pass

@@ -4,7 +4,7 @@ import re
 from .handler import HandlerFactory, DictWrapper, HandlerObj
 from . import filter, fsm
 from ..types import handler
-from typing import Optional
+from typing import Optional, Literal
 
 
 class DispatcherEvents:
@@ -127,6 +127,28 @@ class DispatcherEvents:
             **kwargs
     ):
         """On a user moving in the room."""
+        pass
+
+    def on_voice_change(
+            *custom_filter,
+            users: list[tuple[handler.User, Literal["voice", "muted"]]] = None,
+            seconds_left: int = None,
+            go_on: Optional[bool] = False,
+            **kwargs
+    ):
+        """On a change in voice status in the room."""
+        pass
+
+    def on_message(
+            *custom_filter,
+            user_id: str = None,
+            conversation_id: str = None,
+            is_new_conversation: bool = None,
+            state: Optional[str] = None,
+            go_on: Optional[bool] = False,
+            **kwargs
+    ):
+        """On a inbox message received from a user."""
         pass
 
 

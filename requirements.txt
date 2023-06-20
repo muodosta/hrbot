@@ -1,2 +1,2 @@
-highrise-bot-sdk==23.1.0b12
+highrise-bot-sdk==23.1.0b13
 redis==4.5.5

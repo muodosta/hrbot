@@ -1,5 +1,5 @@
 import re
-from typing import Any, Callable, Optional
+from typing import Any, Callable, Optional, Literal
 
 from . import fsm
 from .handler import HandlerObj
@@ -39,14 +39,14 @@ class Check:
         return True
 
     @staticmethod
-    async def state(user: hr.User, handler_filter: HandlerObj):
+    async def state(user_id: str, handler_filter: HandlerObj):
         handler_state = handler_filter.data.state
 
         if handler_state == '*':
             return True
 
         if 'state' in handler_filter.data._data.keys():
-            if await Check.fsm.get_state(user.id) != handler_state:
+            if await Check.fsm.get_state(user_id) != handler_state:
                 return False
         return True
 
@@ -97,7 +97,7 @@ async def on_chat(
         message: str,
         *args, **kwargs
 ) -> bool:
-    if not await Check.state(user, handler_filter): return False
+    if not await Check.state(user.id, handler_filter): return False
     if not await Check.compare_two_value(handler_filter.data.user, user): return False
     if not await Check.compare_two_value(handler_filter.data.message,
                                          message, handler_filter.data.case_ignore): return False
@@ -117,7 +117,7 @@ async def on_whisper(
         message: str,
         *args, **kwargs
 ) -> bool:
-    if not await Check.state(user, handler_filter): return False
+    if not await Check.state(user.id, handler_filter): return False
     if not await Check.compare_two_value(handler_filter.data.user, user): return False
     if not await Check.compare_two_value(handler_filter.data.message,
                                          message, handler_filter.data.case_ignore): return False
@@ -138,7 +138,7 @@ async def on_emote(
         receiver: hr.User | None,
         *args, **kwargs
 ) -> bool:
-    if not await Check.state(user, handler_filter): return False
+    if not await Check.state(user.id, handler_filter): return False
     if not await Check.compare_two_value(handler_filter.data.user, user): return False
     if not await Check.compare_two_value(handler_filter.data.receiver, receiver): return False
     if not await Check.compare_two_value(handler_filter.data.emote_id, emote_id): return False
@@ -155,7 +155,7 @@ async def on_reaction(
         receiver: hr.User | None,
         *args, **kwargs
 ) -> bool:
-    if not await Check.state(user, handler_filter): return False
+    if not await Check.state(user.id, handler_filter): return False
     if not await Check.compare_two_value(handler_filter.data.user, user): return False
     if not await Check.compare_two_value(handler_filter.data.receiver, receiver): return False
     if not await Check.compare_two_value(handler_filter.data.reaction, reaction): return False
@@ -170,7 +170,7 @@ async def on_user_join(
         user: hr.User,
         *args, **kwargs
 ) -> bool:
-    if not await Check.state(user, handler_filter): return False
+    if not await Check.state(user.id, handler_filter): return False
     if not await Check.compare_two_value(handler_filter.data.user, user): return False
     for filter_func in handler_filter.custom_filters:
         if callable(filter_func) and not await Check.func(user, filter_func):
@@ -183,7 +183,7 @@ async def on_user_leave(
         user: hr.User,
         *args, **kwargs
 ) -> bool:
-    if not await Check.state(user, handler_filter): return False
+    if not await Check.state(user.id, handler_filter): return False
     if not await Check.compare_two_value(handler_filter.data.user, user): return False
     for filter_func in handler_filter.custom_filters:
         if callable(filter_func) and not await Check.func(user, filter_func):
@@ -198,7 +198,7 @@ async def on_tip(
         tip: hr.CurrencyItem | hr.Item,
         *args, **kwargs
 ) -> bool:
-    if not await Check.state(sender, handler_filter): return False
+    if not await Check.state(sender.id, handler_filter): return False
     if not await Check.compare_two_value(handler_filter.data.sender, sender): return False
     if not await Check.compare_two_value(handler_filter.data.receiver, receiver): return False
     if not await Check.compare_two_value(handler_filter.data.tip, tip): return False
@@ -230,10 +230,38 @@ async def on_user_move(
         destination: hr.Position | hr.AnchorPosition,
         *args, **kwargs
 ) -> bool:
-    if not await Check.state(user, handler_filter): return False
+    if not await Check.state(user.id, handler_filter): return False
     if not await Check.compare_two_value(handler_filter.data.user, user): return False
     if not await Check.compare_two_value(handler_filter.data.destination, destination): return False
     for filter_func in handler_filter.custom_filters:
         if callable(filter_func) and not await Check.func(user, filter_func):
+            return False
+    return True
+
+async def on_voice_change(
+        handler_filter: HandlerObj,
+        users: list[tuple[hr.User, Literal["voice", "muted"]]],
+        seconds_left: int,
+        *args, **kwargs
+) -> bool:
+    if not await Check.compare_two_value(handler_filter.data.seconds_left, seconds_left): return False
+    for filter_func in handler_filter.custom_filters:
+        if callable(filter_func) and not await Check.func(users, filter_func):
+            return False
+    return True
+
+async def on_message(
+        handler_filter: HandlerObj,
+        user_id: str,
+        conversation_id: str,
+        is_new_conversation: bool,
+        *args, **kwargs
+) -> bool:
+    if not await Check.state(user_id, handler_filter): return False
+    if not await Check.compare_two_value(handler_filter.data.user_id, user_id): return False
+    if not await Check.compare_two_value(handler_filter.data.conversation_id, conversation_id): return False
+    if not await Check.compare_two_value(handler_filter.data.is_new_conversation, is_new_conversation): return False
+    for filter_func in handler_filter.custom_filters:
+        if callable(filter_func) and not await Check.func(user_id, filter_func):
             return False
     return True
