@@ -8,6 +8,10 @@ from typing import Optional, Literal
 
 
 class DispatcherEvents:
+    def before_start(self):
+        """Called before the bot starts."""
+        pass
+
     def on_start(self):
         """On a connection to the room being established.
 

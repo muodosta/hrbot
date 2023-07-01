@@ -87,7 +87,7 @@ class Check:
             return True
         return False
 
-
+async def before_start(*args, **kwargs) -> bool: return True
 async def on_start(*args, **kwargs) -> bool: return True
 
 

@@ -2,6 +2,7 @@ from .base import BaseBot
 from ..types import _bcolors
 from ..types.hr import SessionMetadata, User, Position, AnchorPosition, Reaction, CurrencyItem, Item
 from typing import Literal
+from quattro import TaskGroup
 
 class Bot(BaseBot):
     @staticmethod
@@ -12,6 +13,11 @@ class Bot(BaseBot):
             await self.dp._process_event(event_name, *args, **kwargs)
 
         return wrapper
+
+    @__event_handler
+    async def before_start(self, tg: TaskGroup) -> None:
+        """Called before the bot starts."""
+        pass
 
     @__event_handler
     async def on_start(self, session_metadata: SessionMetadata) -> None:

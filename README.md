@@ -10,8 +10,8 @@ pip install hrbot
 - Quick and easy creation of an unlimited number of handlers for any event  
 - FSM (finite state machine). Available storage in memory and Redis  
 - Large number of available conditions in handlers  
-# Unreleased features:
 - Web API support
+# Unreleased features:
 - Spam blocking bypass. Allows you to send an unlimited number of identical messages
 # Example:  
 ```python  
