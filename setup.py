@@ -7,7 +7,7 @@ with open("README.md", encoding="utf-8") as f:
 
 setup(
     name="hrbot",
-    version="0.1.3",
+    version="0.1.4",
     author="MuoDosta",
     author_email="MuoDostaWork@gmail.com",
     description="The hrbot is a wrapper on top of the "
@@ -17,6 +17,6 @@ setup(
     url="https://github.com/muodosta/hrbot",
     license="MIT License",
     packages=find_packages(),
-    install_requires=["highrise-bot-sdk==23.1.0b15", "redis==4.5.5", "wheel"],
+    install_requires=["highrise-bot-sdk==23.3.0", "redis==4.5.5", "wheel"],
     python_requires=">=3.10,<4.0"
 )
